@@ -8,26 +8,7 @@ $if(CJKmainfont)$
 \PassOptionsToPackage{space}{xeCJK}
 $endif$
 %
-\documentclass[
-$if(fontsize)$
-  $fontsize$,
-$endif$
-$if(papersize)$
-  $papersize$paper,
-$endif$
-$if(beamer)$
-  ignorenonframetext,
-$if(handout)$
-  handout,
-$endif$
-$if(aspectratio)$
-  aspectratio=$aspectratio$,
-$endif$
-$endif$
-$for(classoption)$
-  $classoption$$sep$,
-$endfor$
-]{$documentclass$}
+\documentclass[20pt]{article}
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
@@ -427,7 +408,7 @@ $else$
 $endif$
 \subtitle{$subtitle$}
 $endif$
-\author{$for(author)$$author$$sep$ \and $endfor$}
+\author{$for(author)$$author.surname$,$author.given-names$$sep$ \and $endfor$}
 \date{$date$}
 $if(beamer)$
 $if(institute)$

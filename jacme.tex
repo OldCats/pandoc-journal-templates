@@ -175,16 +175,25 @@
 $if(title)$
 \title{$title$}
 $endif$
-\author[1,\dagger]{Yu-Chen Chiu\footnote[0]{\textsuperscript{\ast}Corresponding author: Wen-Chu Chiang, MD, PhD, Department of Emergency Medicine, National Taiwan University Hospital, No. 7, Zhongshan S. Rd., Zhongzheng Dist., Taipei City 100, Taiwan. E-mail: drchiang.tw@gmail.com; Jen-Tang Sun, MD, MPH, Department of Emergency Medicine, Far Eastern Memorial Hospital, No. 21, Sec. 2, Nanya S. Rd., Banqiao Dist., New Taipei City 220, Taiwan. E-mail: tangtang05231980@gmail.com}}
-\author[1,\dagger]{Liang-Han Wang}
-\author[2]{Ming-Ju Hsieh}
-\author[3]{Yu-Chun Chien}
-\author[4]{Yao-Cheng Wang}
 
-\author[2,5]{Matthew Huei-Ming Ma}
-\author[2,5,\textsuperscript{\ast}]{Wen-Chu Chiang}
-\author[1,\textsuperscript{\ast}]{Jen-Tang Sun}
-\affil[1]{Department of Emergency Medicine, 
+$if(author)$
+  $for(surname)$
+    \author[2]{$surname$ $given-names$}
+  $endfor$
+$endif$
+
+$for(author)$\author[$for(author.affiliation)$$author.affiliation$$sep$,$endfor$$if(author.corresp)$,\dagger$endif$]{$author.given-names$ $author.surname$$if(author.footnote)$\footnote[0]{\textsuperscript{\ast}$author.footnote$}$endif$}$endfor$
+
+% \author[1,\dagger]{Yu-Chen Chiu\footnote[0]{\textsuperscript{\ast}--footnote--}}
+% \author[1,\dagger]{Liang-Han Wang}
+% \author[2]{Ming-Ju Hsieh}
+% \author[3]{Yu-Chun Chien}
+% \author[4]{Yao-Cheng Wang}
+% 
+% \author[2,5]{Matthew Huei-Ming Ma}
+% \author[2,5,\textsuperscript{\ast}]{Wen-Chu Chiang}
+% \author[1,\textsuperscript{\ast}]{Jen-Tang Sun}
+\affil[1]{Department of Emergency Medicine,
         Far Eastern Memorial Hospital, 
         New Taipei City, 
         Taiwan}
@@ -216,6 +225,9 @@ $endif$
 % Abstracts and keywords
 \begin{minipage}{15cm}
     \vspace{5ex}
+    
+
+
 
     {\parindent 2em Injury is a leading cause of death among young adults. An accurately
 implemented filed triage scheme (FTS) by emergency medical technicians

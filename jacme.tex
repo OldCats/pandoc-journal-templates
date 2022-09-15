@@ -1,251 +1,109 @@
 % Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
+\PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-$if(colorlinks)$
-\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
-$endif$
-$if(CJKmainfont)$
-\PassOptionsToPackage{space}{xeCJK}
-$endif$
 %
 \documentclass[
-$if(fontsize)$
-  $fontsize$,
-$endif$
-$if(papersize)$
-  $papersize$paper,
-$endif$
-$if(beamer)$
-  ignorenonframetext,
-$if(handout)$
-  handout,
-$endif$
-$if(aspectratio)$
-  aspectratio=$aspectratio$,
-$endif$
-$endif$
-$for(classoption)$
-  $classoption$$sep$,
-$endfor$
-]{$documentclass$}
-$if(beamer)$
-$if(background-image)$
-\usebackgroundtemplate{%
-  \includegraphics[width=\paperwidth]{$background-image$}%
+  20pt
+]{article}
+
+\usepackage{layout}
+\usepackage{authblk}
+\usepackage[symbol,flushmargin]{footmisc}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewcommand{\footnoterule}{%
+  \kern 2em  % footnote 水平線上空間
+  \hrule width \textwidth height 0.5pt % footnote 水平線寬
+  \kern 0.5em % footnote 水平線下空間
 }
-$endif$
-\usepackage{pgfpages}
-\setbeamertemplate{caption}[numbered]
-\setbeamertemplate{caption label separator}{: }
-\setbeamercolor{caption name}{fg=normal text.fg}
-\beamertemplatenavigationsymbols$if(navigation)$$navigation$$else$empty$endif$
-$for(beameroption)$
-\setbeameroption{$beameroption$}
-$endfor$
-% Prevent slide breaks in the middle of a paragraph
-\widowpenalties 1 10000
-\raggedbottom
-$if(section-titles)$
-\setbeamertemplate{part page}{
-  \centering
-  \begin{beamercolorbox}[sep=16pt,center]{part title}
-    \usebeamerfont{part title}\insertpart\par
-  \end{beamercolorbox}
-}
-\setbeamertemplate{section page}{
-  \centering
-  \begin{beamercolorbox}[sep=12pt,center]{part title}
-    \usebeamerfont{section title}\insertsection\par
-  \end{beamercolorbox}
-}
-\setbeamertemplate{subsection page}{
-  \centering
-  \begin{beamercolorbox}[sep=8pt,center]{part title}
-    \usebeamerfont{subsection title}\insertsubsection\par
-  \end{beamercolorbox}
-}
-\AtBeginPart{
-  \frame{\partpage}
-}
-\AtBeginSection{
-  \ifbibliography
-  \else
-    \frame{\sectionpage}
-  \fi
-}
-\AtBeginSubsection{
-  \frame{\subsectionpage}
-}
-$endif$
-$endif$
-$if(beamerarticle)$
-\usepackage{beamerarticle} % needs to be loaded first
-$endif$
+
+\usepackage{ifthen}
+% \usepackage[256, showframe]{geometry}
+\usepackage[top=2.5cm, bottom=2.5cm]{geometry}
 \usepackage{amsmath,amssymb}
-$if(fontfamily)$
-\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
-$else$
+\usepackage{multicol}
+\setlength{\columnsep}{1.2cm}
+\usepackage{graphicx}
 \usepackage{lmodern}
-$endif$
-$if(linestretch)$
-\usepackage{setspace}
-$endif$
 \usepackage{iftex}
-\ifPDFTeX
-  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
-$if(mathspec)$
-  \ifXeTeX
-    \usepackage{mathspec}
-  \else
-    \usepackage{unicode-math}
-  \fi
-$else$
+
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+\setlength{\parskip}{1em}
+\usepackage{titlesec}
+
+% \titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
+\titlespacing\section{0pt}{1pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{1pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{1pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
+\geometry{a4paper, scale=0.75}
+
+%------------header/footer setting-----------%
+
+\pagestyle{fancy}{}
+\fancyhf{}
+\setcounter{page}{22}
+
+\fancyhead[L] % 頁首左邊
+{\ifthenelse{\value{page}=22} % 第1頁
+    {\footnotesize \textbf{Journal of Acute Medicine} 11(1): 22-27, 2021\\[0.2em]
+    \textbf{DOI}:10.6705/j.jacme.202103\_11(1).0004\\[0.2em]
+    \textbf{Brief Report}
+    }
+    {\ifthenelse{\isodd{\value{page}}}
+        {} % 其他奇數頁
+        {Chiu et al.}} % 其他偶數頁
+}
+
+\fancyhead[R] % 頁首右邊
+{\ifthenelse{\value{page}=22} % 第1頁
+    {\includegraphics[width=1.5cm]{ap.jpg}
+     \includegraphics[width=1.5cm]{jacme.jpg}
+     \includegraphics[width=1.5cm]{doi-11-1-04.jpg}}
+    {\ifthenelse{\isodd{\value{page}}}
+        {\footnotesize Trauma Field Triage Training of EMT} % 其他奇數頁
+        {}} % 其他偶數頁
+}
+
+\fancyfoot[L] % 左邊頁尾
+{\ifthenelse{\isodd{\value{page}}}
+    {}
+    {\thepage\hspace{5pt}\footnotesize Journal of Acute Medicine 11(1) 2021}}
+
+\fancyfoot[R] % 右邊頁尾
+{\ifthenelse{\isodd{\value{page}}}
+    {{\footnotesize Journal of Acute Medicine 11(1) 2021}\hspace{5pt}\thepage}
+    {}}
+
+
+\renewcommand{\headrulewidth}{0pt}
+
+%-------------------------------------------%
+
+
+%------------footnote without marker--------%
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+%-------------------------------------------%
+
+% luatex or xetex setting
   \usepackage{unicode-math}
-$endif$
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-$if(mainfont)$
-  \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
-$endif$
-$if(sansfont)$
-  \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
-$endif$
-\setmainfont[]{Times New Roman}
-$if(monofont)$
-  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
-$endif$
-$for(fontfamilies)$
-  \newfontfamily{$fontfamilies.name$}[$for(fontfamilies.options)$$fontfamilies.options$$sep$,$endfor$]{$fontfamilies.font$}
-$endfor$
-$if(mathfont)$
-$if(mathspec)$
-  \ifXeTeX
-    \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
-  \else
-    \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
-  \fi
-$else$
-  \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
-$endif$
-$endif$
-$if(CJKmainfont)$
-  \ifXeTeX
-    \usepackage{xeCJK}
-    \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
-  \fi
-$endif$
-$if(luatexjapresetoptions)$
-  \ifLuaTeX
-    \usepackage[$for(luatexjapresetoptions)$$luatexjapresetoptions$$sep$,$endfor$]{luatexja-preset}
-  \fi
-$endif$
-$if(CJKmainfont)$
-  \ifLuaTeX
-    \usepackage[$for(luatexjafontspecoptions)$$luatexjafontspecoptions$$sep$,$endfor$]{luatexja-fontspec}
-    \setmainjfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
-  \fi
-$endif$
-\fi
-$if(zero-width-non-joiner)$
-%% Support for zero-width non-joiner characters.
-\makeatletter
-\def\zerowidthnonjoiner{%
-  % Prevent ligatures and adjust kerning, but still support hyphenating.
-  \texorpdfstring{%
-    \TextOrMath{\nobreak\discretionary{-}{}{\kern.03em}%
-      \ifvmode\else\nobreak\hskip\z@skip\fi}{}%
-  }{}%
-}
-\makeatother
-\ifPDFTeX
-  \DeclareUnicodeCharacter{200C}{\zerowidthnonjoiner}
-\else
-  \catcode`^^^^200c=\active
-  \protected\def ^^^^200c{\zerowidthnonjoiner}
-\fi
-%% End of ZWNJ support
-$endif$
-$if(beamer)$
-$if(theme)$
-\usetheme[$for(themeoptions)$$themeoptions$$sep$,$endfor$]{$theme$}
-$endif$
-$if(colortheme)$
-\usecolortheme{$colortheme$}
-$endif$
-$if(fonttheme)$
-\usefonttheme{$fonttheme$}
-$endif$
-$if(mainfont)$
-\usefonttheme{serif} % use mainfont rather than sansfont for slide text
-$endif$
-$if(innertheme)$
-\useinnertheme{$innertheme$}
-$endif$
-$if(outertheme)$
-\useoutertheme{$outertheme$}
-$endif$
-$endif$
-% Use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-$if(indent)$
-$else$
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-$endif$
-$if(verbatim-in-note)$
-\usepackage{fancyvrb}
-$endif$
-\usepackage{xcolor}
-$if(geometry)$
-$if(beamer)$
-\geometry{$for(geometry)$$geometry$$sep$,$endfor$}
-$else$
-\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
-$endif$
-$endif$
-$if(beamer)$
-\newif\ifbibliography
-$endif$
-$if(listings)$
-\usepackage{listings}
-\newcommand{\passthrough}[1]{#1}
-\lstset{defaultdialect=[5.3]Lua}
-\lstset{defaultdialect=[x86masm]Assembler}
-$endif$
-$if(lhs)$
-\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
-$endif$
-$if(highlighting-macros)$
-$highlighting-macros$
-$endif$
-$if(tables)$
+
+
+% \makeatletter
+
+% \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+\usepackage{hyperref} %for citing reference
+
+% \urlstyle{same} % disable monospaced font for URLs
 \usepackage{longtable,booktabs,array}
-$if(multirow)$
-\usepackage{multirow}
-$endif$
 \usepackage{calc} % for calculating minipage widths
-$if(beamer)$
-\usepackage{caption}
-% Make caption package work with longtable
-\makeatletter
-\def\fnum@table{\tablename~\thetable}
-\makeatother
-$else$
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
 \makeatletter
@@ -254,69 +112,26 @@ $else$
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
-$endif$
-$endif$
-$if(graphics)$
-\usepackage{graphicx}
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-% Set default figure placement to htbp
-\makeatletter
-\def\fps@figure{htbp}
-\makeatother
-$endif$
-$if(strikeout)$
-$-- also used for underline
-\usepackage[normalem]{ulem}
-$endif$
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-$if(numbersections)$
-\setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
-$else$
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-$endif$
-$if(beamer)$
-$else$
-$if(block-headings)$
-% Make \paragraph and \subparagraph free-standing
-\ifx\paragraph\undefined\else
-  \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\ifx\subparagraph\undefined\else
-  \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-$endif$
-$endif$
-$if(pagestyle)$
-\pagestyle{$pagestyle$}
-$endif$
-$if(csl-refs)$
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
 \newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
  {% don't indent paragraphs
   \setlength{\parindent}{0pt}
   % turn on hanging indent if param 1 is 1
-  \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
-  \fi
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
   % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
  }%
  {}
 \usepackage{calc}
@@ -324,215 +139,481 @@ $if(csl-refs)$
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-$endif$
-$if(lang)$
-\ifLuaTeX
-\usepackage[bidi=basic]{babel}
-\else
-\usepackage[bidi=default]{babel}
-\fi
-$if(babel-lang)$
-\babelprovide[main,import]{$babel-lang$}
-$endif$
-$for(babel-otherlangs)$
-\babelprovide[import]{$babel-otherlangs$}
-$endfor$
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
-$endif$
-$for(header-includes)$
-$header-includes$
-$endfor$
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
-$if(dir)$
-\ifPDFTeX
-  \TeXXeTstate=1
-  \newcommand{\RL}[1]{\beginR #1\endR}
-  \newcommand{\LR}[1]{\beginL #1\endL}
-  \newenvironment{RTL}{\beginR}{\endR}
-  \newenvironment{LTR}{\beginL}{\endL}
-\fi
-$endif$
-$if(natbib)$
-\usepackage[$natbiboptions$]{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
-$endif$
-$if(biblatex)$
-\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
-$for(bibliography)$
-\addbibresource{$bibliography$}
-$endfor$
-$endif$
-$if(nocite-ids)$
-\nocite{$for(nocite-ids)$$it$$sep$, $endfor$}
-$endif$
-$if(csquotes)$
-\usepackage{csquotes}
-$endif$
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
-$if(links-as-notes)$
-% Make links footnotes instead of hotlinks:
-\DeclareRobustCommand{\href}[2]{#2\footnote{\url{#1}}}
-$endif$
-$if(verbatim-in-note)$
-\VerbatimFootnotes % allow verbatim text in footnotes
-$endif$
-\hypersetup{
-$if(title-meta)$
-  pdftitle={$title-meta$},
-$endif$
-$if(author-meta)$
-  pdfauthor={$author-meta$},
-$endif$
-$if(lang)$
-  pdflang={$lang$},
-$endif$
-$if(subject)$
-  pdfsubject={$subject$},
-$endif$
-$if(keywords)$
-  pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
-$endif$
-$if(colorlinks)$
-  colorlinks=true,
-  linkcolor={$if(linkcolor)$$linkcolor$$else$Maroon$endif$},
-  filecolor={$if(filecolor)$$filecolor$$else$Maroon$endif$},
-  citecolor={$if(citecolor)$$citecolor$$else$Blue$endif$},
-  urlcolor={$if(urlcolor)$$urlcolor$$else$Blue$endif$},
-$else$
-$if(boxlinks)$
-$else$
-  hidelinks,
-$endif$
-$endif$
-  pdfcreator={LaTeX via pandoc}}
 
-$if(title)$
-\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
-$endif$
-$if(subtitle)$
-$if(beamer)$
-$else$
-\usepackage{etoolbox}
-\makeatletter
-\providecommand{\subtitle}[1]{% add subtitle to \maketitle
-  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+
+
+
+\makeatletter 
+
+% maketitle and author
+\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
+\begin{flushleft}
+    \begin{minipage}{14cm}
+        \textbf{\Large\@title}
+    \end{minipage}
+
+    \vspace*{3pt}
+        \@author
+\end{flushleft}\egroup
 }
-\makeatother
-$endif$
-\subtitle{$subtitle$}
-$endif$
-\author{$for(author)$$author$$sep$ \and $endfor$}
-\date{$date$}
-$if(beamer)$
-$if(institute)$
-\institute{$for(institute)$$institute$$sep$ \and $endfor$}
-$endif$
-$if(titlegraphic)$
-\titlegraphic{\includegraphics{$titlegraphic$}}
-$endif$
-$if(logo)$
-\logo{\includegraphics{$logo$}}
-$endif$
-$endif$
+
+
+
+\renewcommand*{\Authfont}{\raggedright\sffamily\small}
+\renewcommand*{\Affilfont}{\raggedright\rmfamily\scriptsize} % 修改機構名稱的字體與大小
+\renewcommand\Authands{, } % 去掉 and 前的逗號
+\date{} % 去掉日期
+
+
+
+
 
 \begin{document}
-$if(has-frontmatter)$
-\frontmatter
-$endif$
+
+\footnotetext[0]{Received: May 15, 2019; Revised: January 6, 2020 (3rd); Accepted: February 11, 2020}
+
 $if(title)$
-$if(beamer)$
-\frame{\titlepage}
-$else$
+\title{$title$}
+$endif$
+\author[1,\dagger]{Yu-Chen Chiu\footnote[0]{\textsuperscript{\ast}Corresponding author: Wen-Chu Chiang, MD, PhD, Department of Emergency Medicine, National Taiwan University Hospital, No. 7, Zhongshan S. Rd., Zhongzheng Dist., Taipei City 100, Taiwan. E-mail: drchiang.tw@gmail.com; Jen-Tang Sun, MD, MPH, Department of Emergency Medicine, Far Eastern Memorial Hospital, No. 21, Sec. 2, Nanya S. Rd., Banqiao Dist., New Taipei City 220, Taiwan. E-mail: tangtang05231980@gmail.com}}
+\author[1,\dagger]{Liang-Han Wang}
+\author[2]{Ming-Ju Hsieh}
+\author[3]{Yu-Chun Chien}
+\author[4]{Yao-Cheng Wang}
+
+\author[2,5]{Matthew Huei-Ming Ma}
+\author[2,5,\textsuperscript{\ast}]{Wen-Chu Chiang}
+\author[1,\textsuperscript{\ast}]{Jen-Tang Sun}
+\affil[1]{Department of Emergency Medicine, 
+        Far Eastern Memorial Hospital, 
+        New Taipei City, 
+        Taiwan}
+\affil[2]{Department of Emergency Medicine, 
+        National Taiwan University Hospital, 
+        Taipei, 
+        Taiwan}
+\affil[3]{National Fire Agency, 
+        Ministry of the Interior, 
+          Taiwan}
+\affil[4]{Taipei City Fire Department, 
+        Taipei, 
+        Taiwan}
+\affil[5]{Department of Emergency Medicine, 
+        National Taiwan University Hospital Yun-Lin Branch, 
+        Yunlin, 
+        Taiwan}
+        
+
+\vspace*{5ex}
+
+% \blfootnote{\textsuperscript{\dagger}These authors contributed equally to this work.}   
+
 \maketitle
-$endif$
-$if(abstract)$
-\begin{abstract}
-$abstract$
-\end{abstract}
-$endif$
-$endif$
+\thispagestyle{fancy} % render Title, author and affiliation
 
-$for(include-before)$
-$include-before$
+\vspace{1ex}
 
-$endfor$
-$if(toc)$
-$if(toc-title)$
-\renewcommand*\contentsname{$toc-title$}
-$endif$
-$if(beamer)$
-\begin{frame}[allowframebreaks]
-$if(toc-title)$
-  \frametitle{$toc-title$}
-$endif$
-  \tableofcontents[hideallsubsections]
-\end{frame}
-$else$
-{
-$if(colorlinks)$
-\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
-$endif$
-\setcounter{tocdepth}{$toc-depth$}
-\tableofcontents
-}
-$endif$
-$endif$
-$if(lof)$
-\listoffigures
-$endif$
-$if(lot)$
-\listoftables
-$endif$
-$if(linestretch)$
-\setstretch{$linestretch$}
-$endif$
-$if(has-frontmatter)$
-\mainmatter
-$endif$
-$body$
+% Abstracts and keywords
+\begin{minipage}{15cm}
+    \vspace{5ex}
 
-$if(has-frontmatter)$
-\backmatter
-$endif$
-$if(natbib)$
-$if(bibliography)$
-$if(biblio-title)$
-$if(has-chapters)$
-\renewcommand\bibname{$biblio-title$}
-$else$
-\renewcommand\refname{$biblio-title$}
-$endif$
-$endif$
-$if(beamer)$
-\begin{frame}[allowframebreaks]{$biblio-title$}
-  \bibliographytrue
-$endif$
-  \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
-$if(beamer)$
-\end{frame}
-$endif$
+    {\parindent 2em Injury is a leading cause of death among young adults. An accurately
+implemented filed triage scheme (FTS) by emergency medical technicians
+(EMTs) is the first step for delivering right patients to the right
+hospital. However, the training effect of FTS on EMTs with different
+levels and backgrounds has scarcely been reported. We evaluated training
+effects of FTS among EMTs in Taipei. Standard FTS contains physiologic
+status, anatomical sites of injury, and mechanism of injury criteria.
+The intervention was a 30-minute lecture and pre-and-post tests, each
+containing five questions about trauma severity judgment (i.e.,
+mechanism of injury {[}2 questions{]}, anatomic sites of injury {[}2
+questions{]}, and physiological status {[}1 question{]}). The change in
+EMT accuracy was measured before and after training. Subgroup analyses
+were performed across EMTs with different levels and seniorities. From
+September 1, 2015 to March 31, 2016, 821 EMTs were enrolled, including
+740 EMT-intermediates and 81 paramedics. Overall, EMT accuracy improved
+after the intervention in the intermediate (73.2\% vs.~85.5\%, p
+\textless{} 0.05) and paramedic (76.0\% vs.~85.7\%, p \textless{} 0.01)
+groups. All trainees showed improvements in physiology and mechanism
+criteria, but paramedics showed decreased accuracy in anatomic criteria.
+The subgroup analysis showed that accuracy positively associated with
+prehospital care experience for major trauma cases 1 year before the
+training course, and the anatomical criterion accuracy was adversely
+associated with paramedic seniority. Field triage training can improve
+EMT accuracy for FTS. The anatomical aspect is more diffi cult to
+improve and should be emphasized in FTS training courses.}
 
-$endif$
-$endif$
-$if(biblatex)$
-$if(beamer)$
-\begin{frame}[allowframebreaks]{$biblio-title$}
-  \bibliographytrue
-  \printbibliography[heading=none]
-\end{frame}
-$else$
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-$endif$
+    \vspace{1em}
+    \textbf{Key words:} \textit{emergency medical service (EMS), emergency
+medical technician (EMT), education and training, filed triage scheme
+(FTS), trauma}
 
-$endif$
-$for(include-after)$
-$include-after$
+\end{minipage}
 
-$endfor$
+\vspace{2em}
+
+\setlength{\parindent}{2em}
+
+\begin{multicols}{2}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+{Injury is the ninth leading cause of death in the world, and the leading
+cause of death in young people.\textsuperscript{{[}1{]}} Rapid
+transporting a severely-injured patient to an appropriate trauma center
+reduces his/her risk of mortality by 25\%\textsuperscript{{[}2{]}}
+because prolonged prehospital time is associated with worsen
+outcome,\textsuperscript{{[}3{]}} and that relies on accurate field
+triage decisions by emergency medical technicians (EMTs). In many
+countries, emergency medical service (EMS) systems develop field triage
+scheme (FTS) in reference to the US FTS.\textsuperscript{{[}4{]}}
+Although the US FTS guides the destination facility choice by a stepwise
+evaluation of physiologic status (P), anatomical injury (A), injury
+mechanism (M), and special consideration of the injured patient, EMTs'
+responses to P, A, and M criteria may differ.\textsuperscript{{[}2{]}}
+
+Currently, no study has investigated field triage training of EMTs.
+Here, we evaluated whether a single training program improves field
+triage accuracy and learning outcomes among FTS sub-aspects.}
+
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
+
+\hypertarget{study-design-and-setting}{%
+\subsection{Study Design and Setting}\label{study-design-and-setting}}
+
+This is a before-and-after study. We held seven field triage trainings
+for Taipei EMTs from September 1, 2015 to March 31, 2016 for all
+intermediate and paramedic EMTs in Taipei City. Taipei City is a
+metropolitan area with 2.65 million registered individuals over 272
+km\textsuperscript{2} , including about 3.00 million inflow daytime
+workers. There are 973 intermediates and 89 paramedics in Taipei City
+and up to 49,000 annual trauma-related missions.
+
+\hypertarget{irb-approval}{%
+\subsection{IRB Approval}\label{irb-approval}}
+
+The study protocol was approved by the Institutional Review Board of the
+National Taiwan University Hospital.
+
+\hypertarget{exposure-definition}{%
+\subsection{Exposure Definition}\label{exposure-definition}}
+
+Participants were exposed to a 30-minute lecture and underwent pre- and
+post-tests. The pre-test and post-test were comprised of five
+single-choice questions based on a scenario with trauma patient. Each
+question regard to mechanism of injury (M; 2 questions), anatomic injury
+sites (A; 2 questions), or physiological status (P; 1 question). A
+medical director team in Taipei City designed the lecture and test
+contents. Although the scenarios were different in preand post-test,
+these two scenarios were designed by the medical director team with the
+consensus of the degree of difficulty to guarantee comparability.
+
+The seniority and major trauma experience among the paramedics were also
+recorded to test the association with a training effect. The seniority
+is comprised of ``EMT seniority'' (i.e., the period from the certificate
+of EMT basic) and ``Paramedic seniority'' (i.e., the period from the
+certification of EMT-P). The reason to divide the seniority is that we
+think both the occupational years (EMT seniority with multi-tasking
+duty) and expertise experience (paramedic seniority merely focusing on
+the ambulance run) might differently affect their learning.
+
+\hypertarget{outcomes}{%
+\subsection{Outcomes}\label{outcomes}}
+
+The primary outcome was the test accuracy comparison before and after
+training. The secondary outcomes included EMT level and seniority.
+
+\hypertarget{statistical-analysis}{%
+\subsection{Statistical Analysis}\label{statistical-analysis}}
+
+Data entered in Excel (Microsoft, Redmond, WA, USA) was processed and
+analyzed by SAS software version 9.3 (SAS Institute, Cary, NC, USA).
+Descriptive population statistics were given as counts, percentages, or
+mean ± standard deviation. We used the McNemar and Mann--Whitney rank
+sum tests for comparisons. A two-tailed p-value \textless{} 0.05 was
+considered significant. We examined the correlation between accuracy and
+(1) seniority, (2) experience of major trauma mission, and (3) major
+trauma mission within 1 year using Pearson correlations.
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\end{multicols}
+
+Fig. 1 \emph{shows} the participant algorithm. In total, 740
+intermediates (76.1\% of all EMT-intermediates in Taipei) and 81
+paramedics (91\% of all paramedics in Taipei) were included. Participant
+characteristics are summarized in revised Table 1.
+
+Fig. 1. Algorithm of this study.\\
+EMT: emergency medical technician.
+
+\begin{longtable}[]{@{}lll@{}}
+\caption{Demographic data}\tabularnewline
+\toprule
+　 & EMT-intermediate & EMT-paramedic \\
+\midrule
+\endfirsthead
+\toprule
+　 & EMT-intermediate & EMT-paramedic \\
+\midrule
+\endhead
+Number & 740 & 81 \\
+Age, mean ± SD, y & 34.6 ± 7.2 & 34.7 ± 4.5 \\
+Male (\%) & 702 (94.8) & 77 (95.1) \\
+Seniority, mean ± SD, y & 5.6 ± 2.4 & 11.8 ± 5.1 \\
+Major trauma mission within 1 year & --- & 61 \\
+\bottomrule
+\end{longtable}
+
+\begin{multicols}{2}
+The baseline field triage accuracy for all EMS providers was 73.51\% and
+rose to 85.6\% after training (p \textless{} 0.05). Overall accuracy
+improved after intervention in the intermediate (73.2\% vs.~85.5\%, p
+\textless{} 0.05) and paramedic (76.0\% vs.~85.7\%, p \textless{} 0.01)
+groups, which presented higher mechanism and physiological aspect
+post-test accuracies, but not higher anatomical aspects. The trend of
+anatomical question performance worsened in the paramedic group, but was
+not statistically significant (82.0\% vs.~80.9\%, p = 0.87) in revised
+Table 2. To determine the impact of seniority, we divided paramedics
+into subgroups (Table 3). Significant mechanism aspect improvements were
+observed in all subgroups. Physiological aspect performance was not
+statistically significant but tended to improve. The anatomical aspect
+accuracy non-significantly declined after training in the high seniority
+subgroup. We analyzed the association between field triage and
+experience in the paramedic group and found a significant correlation
+between ``major trauma mission within 1 year'' and pretest/posttest
+accuracy (p = 0.037/0.002).
+\end{multicols}
+
+
+\begin{longtable}[]{@{}lllllll@{}}
+\caption{Improvement in accuracy after training}\tabularnewline
+\toprule
+& EMT-intermediate & EMT-paramedic & & & & \\
+\midrule
+\endfirsthead
+\toprule
+& EMT-intermediate & EMT-paramedic & & & & \\
+\midrule
+\endhead
+& Pre-test & Post-test & p value & Pre-test & Post-test & p value \\
+Overall, \% & 73.2 & 85.5 & \textless{} 0.05* & 76 & 85.7 & \textless{}
+0.01* \\
+Mechanism, \% & 68.4 & 92 & \textless{} 0.01* & 71.6 & 91.4 &
+\textless{} 0.01* \\
+Physiological, \% & 68.1 & 81.9 & 0.01* & 72.8 & 84 & 0.09 \\
+Anatomical, \% & 78.2 & 83.4 & 0.2 & 82 & 80.9 & 0.87 \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.22}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.07}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.22}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.21}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.22}}@{}}
+\caption{Effect of experience on accuracy in the paramedic
+group}\tabularnewline
+\toprule
+Paramedic & n & Pre-test accuracy (\%) & Post-test
+
+accuracy (\%) & McNemar
+
+p value \\
+\midrule
+\endfirsthead
+\toprule
+Paramedic & n & Pre-test accuracy (\%) & Post-test
+
+accuracy (\%) & McNemar
+
+p value \\
+\midrule
+\endhead
+Sex & & & & \\
+Male & 77 & M = 72.7 & M = 91.6 & M, p \textless{}
+0.001\textsuperscript{*} \\
+& & P = 74.0 & P = 84.4 & P, p = 0.115 \\
+& & A = 81.8 & A = 81.2 & A, p = 0.167 \\
+EMT seniority (year) & & & & \\
+≤ 12 & 39 & M = 65.4 & M = 92.3 & M, p \textless{}
+0.001\textsuperscript{*} \\
+& & P = 79.5
+
+A = 80.8 & P = 92.3
+
+A = 87.2 & P, p = 0.180
+
+A, p = 0.039\textsuperscript{*} \\
+\textgreater{} 12 & 39 & M = 76.9 & M = 93.6 & M, p \textless{}
+0.001\textsuperscript{*} \\
+& & P = 69.2 & P = 79.5 & P, p = 0.388 \\
+& & A = 83.3 & A = 73.1 & A, p = 0.508 \\
+Paramedic seniority (year) & & & & \\
+≤ 5 & 39 & M = 67.9 & M = 92.3 & M, p \textless{}
+0.001\textsuperscript{*} \\
+& & P = 79.5 & P = 92.3 & P, p = 0.180 \\
+& & A = 84.6 & A = 84.6 & A, p = 0.344 \\
+\textgreater{} 5 & 38 & M = 75.0 & M = 93.4 & M, p \textless{}
+0.001\textsuperscript{*} \\
+& & P = 68.4 & P = 78.9 & P, p = 0.388 \\
+& & A = 78.9 & A = 75.0 & A, p = 1.000 \\
+Major trauma mission within 1 year & & & & \\
+No & 20 & M = 62.5 & M = 85.0 & M, p \textless{}
+0.001\textsuperscript{*} \\
+& & P = 70.0 & P = 75.0 & P, p = 1.000 \\
+& & A = 80.0 & A = 72.5 & A, p = 1.000 \\
+Yes & 61 & M = 74.6 & M = 93.4 & M, p \textless{}
+0.001\textsuperscript{*} \\
+& & P = 73.8 & P = 86.9 & P, p = 0.057 \\
+& & A = 82.8 & A = 83.6 & A, p = 0.302 \\
+\bottomrule
+\end{longtable}
+
+\begin{multicols}{2}
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+The single FTS training program significantly improved overall
+prehospital field triage decision accuracy. Improvement was achieved
+mainly in mechanical and physiological criteria. To our knowledge, this
+is the first study to evaluate different FTS aspects among EMTs, and our
+results are informative for FTS training courses. In our study, major
+trauma within 1 year positively impacted field triage. This was
+supported by David and Brachet's study, which found that more than 2
+years of field experience plus past and recent trauma patient volume
+associated with prehospital interval
+reductions.\textsuperscript{{[}4{]}} However, the anatomical aspect
+accuracy decreased in the paramedic group, especially for those with
+higher seniority, which seems to thwart educational improvement. Most
+senior paramedics incorrectly answered the post-test question that
+pictured a javelin penetrating the calf (Fig 2), misleading to
+over-triage this case to a trauma center, while a penetrating distal
+limb injury does not meet trauma center transportation criteria.
+However, there is a proviso, ``when in doubt, transport to a trauma
+center''.\textsuperscript{{[}3{]}} Even though senior paramedics
+incorrectly answered this question; this over-triage is acceptable in
+clinical practice. The US-FTS evaluates injured patients step by step.
+However, studies that have discussed the prehospital triage
+decision-making model revealed that the information obtained before
+contacting the patient (early visual cues from the scene, mechanism of
+injury, and patient appearance) play more important roles than further
+assessment (defi nite vital signs, non-obvious anatomic injury, and
+detail history) in decision
+making.;\textsuperscript{{[}5{]}}\textsuperscript{{[}6{]}} ``EMT gut
+feeling'' refers to the ``EMS provider judgment'' criteria that was the
+last criteria added into the ACS COT (American College of Surgeons
+Committee on Trauma) decision scheme in 2006 and is the last triage
+scale step. However, it is also the most commonly cited (40.0\%) and
+sometimes the only used (21.4\%) criterion.5 The value of EMS provider
+judgement criteria varies between sites, modestly increases overtriage,
+and plays an important role in identifying high risk patients who are
+missed by physiologic and anatomic
+criteria.;\textsuperscript{{[}5{]}}\textsuperscript{{[}6{]}} In our
+study, the post-test penetration question is sanguineous and makes the
+trainees follow their gut feeling and triage the patient to the trauma
+center rather than apply the anatomical step. Further training programs
+should put more emphasis on avoiding EMT judgments that increase
+overtriage rates and impact emergency care efficacy.
+
+Fig. 2. One of the questions in the post-test that made many senior
+paramedics overtriage.
+
+\hypertarget{limitations}{%
+\section{Limitations}\label{limitations}}
+
+Our study has several limitations. First, the number of paramedics was
+limited. Second, the seniority and major trauma experience among the EMT
+intermediates were not recorded. Hence, the association between the
+seniority of EMT intermediates and its training effect cannot be
+evaluated. Third, training course impact was evaluated based on the
+tests, not clinical performance. Finally, the cut point of 12 years (in
+EMT seniority) and 5 years (in paramedic year) was not based on medical
+evidence but for the middle point of the data distribution to enhance
+the comparability. Actually, there was scarce evidence about the
+association between the EMT seniority and their trauma triage
+performance; therefore, we just choice the median year as the cut point.
+Further studies should focus on the EMT seniority and their clinical
+performance.
+
+\hypertarget{conclusions}{%
+\section{Conclusions}\label{conclusions}}
+
+The training course improves the field triage accuracy in Taipei City.
+Anatomical FTS aspects are more difficult to improve by a single
+training program, especially in senior paramedics. Future teaching
+programs should emphasize FTS anatomy aspects.
+
+\hypertarget{acknowledgments}{%
+\section{Acknowledgments}\label{acknowledgments}}
+
+We appreciate the excellent performance of EMTs and the quality
+assurance of the Ambulance Division of Taipei City. The authors would
+also like to express their thanks to the staff of National Taiwan
+University Hospital-Statistical Consulting Unit (NTUH-SCU) for
+statistical consultation and analyses.
+
+\hypertarget{conflicts-of-interest-statement}{%
+\section{Conflicts of Interest
+Statement}\label{conflicts-of-interest-statement}}
+
+None.
+
+\hypertarget{funding}{%
+\section{Funding}\label{funding}}
+
+This study was funded by the Taiwan Ministry of Science and Technology
+(MOST 105-2314-B-002- 200-MY3 and MOST 105-2314-B-002-182).
+
+\hypertarget{reference}{%
+\section*{Reference}\label{reference}}
+\addcontentsline{toc}{section}{Reference}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-1}{}}%
+McCoy, C. E., Chakravarthy, B., \& S, L. (2013). Guidelines for field
+triage of injured patients: In conjunction with the morbidity and
+mortality weekly report published by the center for disease control and
+prevention. \emph{West J Emerg Med}, \emph{14}, 69--76.
+\url{https://doi.org/10.5811/westjem.2013.1.15981}
+
+\leavevmode\vadjust pre{\hypertarget{ref-2}{}}%
+MacKenzie, E. J., Rivara, F. P., \& Jurkovich, G. J. (2006). A national
+evaluation of the eff ect of trauma-center care on mortality. \emph{N
+Engl J Med}, \emph{354}, 366--378.
+\url{https://doi.org/10.1056/NEJMsa052049}
+
+\leavevmode\vadjust pre{\hypertarget{ref-3}{}}%
+Chen, C. H., Shin, S. D., \& Sun, J. T. (2020). Association between
+prehospital time and outcome of trauma patients in 4 asian countries: A
+cross-national, multicenter cohort study. \emph{PLoS Med},
+\emph{17:e1003360}. \url{https://doi.org/10.1371/journal.pmed.1003360}
+
+\leavevmode\vadjust pre{\hypertarget{ref-4}{}}%
+Sasser, S. M., Hunt, R. C., \& Faul, M. (2012). Guidelines for field
+triage of injured patients: Recommendations of the national expert panel
+on field triage, 2011. \emph{MMWR Recomm Rep}, \emph{61}(RR-1), 1--20.
+
+\leavevmode\vadjust pre{\hypertarget{ref-5}{}}%
+Newgard, C. D., Kampp, M., \& Nelson, M. (2012). Deciphering the use and
+predictive value of {``emergency medical services provider judgment''}
+in out-of-hospital trauma triage: A multisite, mixed methods assessment.
+\emph{J Trauma Acute Care Surg}, \emph{72}, 1239--1248.
+\url{https://doi.org/10.1097/TA.0b013e3182468b51}
+
+\leavevmode\vadjust pre{\hypertarget{ref-6}{}}%
+Newgard, C. D., Zive, D., \& Holmes, J. F. (2011). A multisite
+assessment of the american college of surgeons committee on trauma field
+triage decision scheme for identifying seriously injured children and
+adults. \emph{J Am Coll Surg}, \emph{213}, 709--721.
+\url{https://doi.org/10.1016/j.jamcollsurg.2011.09.012}
+
+\end{CSLReferences}
+\end{multicols}
+
+
+%\layout
 \end{document}
